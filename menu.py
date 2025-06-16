@@ -1,6 +1,42 @@
 from registros import registrar_perro, registrar_usuario
+from sistema_adopcion import SistemaAdopcion
 
-def menu():
+# Inicializamos el sistema
+sistema = SistemaAdopcion()
+
+# Funciones auxiliares del menú (mantienen las operaciones que están solo dentro del sistema)
+def buscar_perros_para_usuario():
+    dni = input("\nIngrese su DNI: ")
+    usuario = sistema.buscar_usuario_por_dni(dni)
+
+    if usuario:
+        resultados = sistema.buscar_perros_por_preferencias(usuario.preferencias)
+        if resultados:
+            print("\nPerros encontrados según tus preferencias:")
+            for perro in resultados:
+                perro.mostrar_informacion()
+                print("-" * 20)
+        else:
+            print("No se encontraron perros que coincidan con tus preferencias.\n")
+    else:
+        print("Usuario no encontrado.\n")
+
+def postular_adopcion():
+    dni = input("\nIngrese su DNI: ")
+    id_perro = input("Ingrese el ID del perro a postular: ")
+    sistema.postular_adopcion(dni, id_perro)
+
+def confirmar_adopcion():
+    dni = input("\nIngrese su DNI: ")
+    id_perro = input("Ingrese el ID del perro a confirmar adopción: ")
+    sistema.confirmar_adopcion(dni, id_perro)
+
+def listar_perros():
+    print("\n--- Lista de perros disponibles ---")
+    sistema.listar_perros_disponibles()
+
+# Menú principal
+def mostrar_menu():
     while True:
         print("\n--- Sistema de Adopción de Perros ---")
         print("1. Registrar perro")
@@ -14,9 +50,9 @@ def menu():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            registrar_perro()
+            registrar_perro(sistema)
         elif opcion == "2":
-            registrar_usuario()
+            registrar_usuario(sistema)
         elif opcion == "3":
             buscar_perros_para_usuario()
         elif opcion == "4":
