@@ -3,7 +3,7 @@ from usuario_adoptante import UsuarioAdoptante
 
 def registrar_perro(sistema):
     print("\n--- Registrar nuevo perro ---")
-    id = input("ID: ")
+    id = sistema.generar_id_perro()
     nombre = input("Nombre: ")
     raza = input("Raza: ")
     edad = int(input("Edad: "))

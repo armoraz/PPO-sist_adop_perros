@@ -4,8 +4,9 @@ from sistema_adopcion import SistemaAdopcion
 # Inicializamos el sistema
 sistema = SistemaAdopcion()
 
-# Funciones auxiliares del menú (mantienen las operaciones que están solo dentro del sistema)
-def buscar_perros_para_usuario():
+
+def buscar_perros_para_usuario(): #Función para buscar perros según las preferencias del usuario
+    print("\n--- Buscar perros según preferencias ---")
     dni = input("\nIngrese su DNI: ")
     usuario = sistema.buscar_usuario_por_dni(dni)
 
@@ -41,7 +42,7 @@ def mostrar_menu():
         print("\n--- Sistema de Adopción de Perros ---")
         print("1. Registrar perro")
         print("2. Registrar usuario adoptante")
-        print("3. Buscar perros según preferencias")
+        print("3. Buscar perros por usuario")
         print("4. Postular adopción")
         print("5. Confirmar adopción")
         print("6. Listar perros disponibles")

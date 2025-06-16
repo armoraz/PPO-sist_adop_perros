@@ -7,6 +7,12 @@ class SistemaAdopcion:
     def __init__(self):
         self.perros = []
         self.usuarios = []
+        self.contador_perros = 1
+    
+    def generar_id_perro(self):
+        nuevo_id = f"P{self.contador_perros:05d}"
+        self.contador_perros += 1
+        return nuevo_id
 
     # Métodos para perros
     def agregar_perro(self, perro):
