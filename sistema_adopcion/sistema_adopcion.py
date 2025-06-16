@@ -1,15 +1,27 @@
-# sistema_adopcion.py
-
 from perro import Perro
 from usuario_adoptante import UsuarioAdoptante
+# from storage import guardar_datos, cargar_datos
 
 class SistemaAdopcion:
     def __init__(self):
         self.perros = []
         self.usuarios = []
         self.contador_perros = 1
+
+    # Persistencia de datos (comentado por ahora)
+    # def __init__(self):
+    #     self.perros, self.usuarios = cargar_datos()
+    #     self.contador_perros = self.obtener_max_id() + 1
+
+    # def obtener_max_id(self):
+    #     if not self.perros:
+    #         return 0
+    #     return max(int(p.id[1:]) for p in self.perros)
     
-    def generar_id_perro(self):
+    # def guardar(self):
+    #     guardar_datos(self.perros, self.usuarios)    
+    
+    def generar_id_perro(self): # Autogeneracion de ID para perros
         nuevo_id = f"P{self.contador_perros:05d}"
         self.contador_perros += 1
         return nuevo_id
