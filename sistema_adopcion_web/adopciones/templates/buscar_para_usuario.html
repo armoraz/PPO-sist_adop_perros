@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>Buscar perros según preferencias de usuario</h1>
 
 {% if error %}
@@ -13,11 +16,24 @@
 
 {% if perros %}
     <h2>Perros disponibles para adopción</h2>
-    <ul>
+    {% if mensaje %}
+    <p style="color: green;">{{ mensaje }}</p>
+    {% endif %}
+    <ul class="list-group">
         {% for perro in perros %}
-            <li>{{ perro.nombre }} - {{ perro.raza }} - {{ perro.edad }} años</li>
+            <li class="list-group-item">{{ perro.nombre }} - {{ perro.raza }} - {{ perro.edad }} años</li>
+
+            {% if perro.estado == 'disponible' %}
+                <form method="post" class="mb-4" action="{% url 'postular_adopcion' perro.id usuario.dni %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Postular</button>
+                </form>
+            {% else %}
+                (Reservado)
+            {% endif %}
         {% endfor %}
     </ul>
 {% else %}
     <p>No hay perros disponibles para adopción según sus preferencias.</p>
 {% endif %}
+{% endblock %}

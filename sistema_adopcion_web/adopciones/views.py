@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Perro, UsuarioAdoptante
 from .forms import UsuarioAdoptanteForm, PerroForm, BuscarPerroForm
 
@@ -68,3 +68,29 @@ def buscar_para_usuario(request):
     else:
 
         return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario})
+    
+
+
+def postular_adopcion(request, id_perro, dni_usuario):
+    perro = get_object_or_404(Perro, id=id_perro)
+    usuario = get_object_or_404(UsuarioAdoptante, dni=dni_usuario)
+
+    if perro.estado == 'disponible':
+        perro.estado = 'reservado'
+        perro.save()
+        mensaje = f"{usuario.nombre} postuló la adopción de {perro.nombre}."
+    else:
+        mensaje = "El perro ya no está disponible."
+
+    # Luego de postular, podrías volver al mismo listado:
+    perros = Perro.objects.filter(estado='disponible')
+
+    # Aplicar nuevamente el filtrado de preferencias:
+    if usuario.preferencias_raza:
+        perros = perros.filter(raza__iexact=usuario.preferencias_raza)
+    if usuario.preferencias_edad:
+        perros = perros.filter(edad=usuario.preferencias_edad)
+    if usuario.preferencias_tamaño:
+        perros = perros.filter(tamaño__iexact=usuario.preferencias_tamaño)
+
+    return render(request, 'buscar_para_usuario.html', {'perros': perros, 'usuario': usuario, 'mensaje': mensaje})
