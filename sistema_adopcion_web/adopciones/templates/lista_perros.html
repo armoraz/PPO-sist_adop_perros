@@ -1,0 +1,22 @@
+<h1>Perros disponibles</h1>
+
+<h2>Buscar por</h2>
+<form method="get">
+    <label>Raza:</label>
+    <input type="text" name="raza" value="{{ request.GET.raza }}">
+    
+    <label>Edad:</label>
+    <input type="number" name="edad" value="{{ request.GET.edad }}">
+    
+    <label>Tamaño:</label>
+    <input type="text" name="tamaño" value="{{ request.GET.tamaño }}">
+    <button type="submit">Buscar</button>
+</form>
+
+<ul>
+    {% for perro in perros %}
+        <li>{{ perro.nombre }} - {{ perro.raza }} - {{ perro.edad }} años</li>
+    {% empty %}
+        <li>No hay perros disponibles.</li>
+    {% endfor %}
+</ul>
