@@ -10,6 +10,40 @@ El proyecto cuenta con dos implementaciones:
 1. **Versión de consola (POO puro)** — permite gestionar el sistema por línea de comandos.  
 2. **Versión web (Django)** — permite exponer la misma funcionalidad mediante una aplicación web.
 
+## Ejecución en consola (versión local)
+
+1. Requisitos: Python 3.11 o superior.
+
+2. Descargar o clonar el proyecto.
+
+3. Desde la raíz del proyecto (`PPO-perros/`), ejecutar el siguiente comando en la terminal:
+
+```bash
+python main.py
+
+## Ejecución en versión web (Django)
+
+1. Requisitos:
+```bash
+- Python 3.11 o superior
+- Django 5.x
+
+2. Posicionarse en la carpeta del proyecto web:
+```bash
+cd sistema_adopcion_web
+
+3. Aplicar las migraciones de base de datos (si corresponde):
+```bash
+python manage.py migrate
+
+4. Iniciar el servidor de desarrollo de Django:
+```bash
+python manage.py runserver
+
+5. Acceder a la aplicación desde un navegador:
+```bash
+http://127.0.0.1:8000/
+
 ### Estructura de carpetas
 
 PPO-perros/
