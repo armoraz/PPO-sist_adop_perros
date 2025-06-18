@@ -19,7 +19,6 @@ El proyecto cuenta con dos implementaciones:
 3. Desde la raíz del proyecto (`PPO-perros/`), ejecutar el siguiente comando en la terminal:
 
 ```bash
-python main.py
 
 ## Ejecución en versión web (Django)
 
