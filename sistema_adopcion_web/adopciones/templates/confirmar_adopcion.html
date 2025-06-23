@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Confirmar adopción</h1>
+
+{% if error %}
+    <p style="color:red">{{ error }}</p>
+{% endif %}
+
+{% if mensaje %}
+    <p style="color:green">{{ mensaje }}</p>
+{% endif %}
+
+{% if not usuario %}
+<form method="post">
+    {% csrf_token %}
+    <label>Ingrese su DNI:</label>
+    <input type="text" name="dni">
+    <button type="submit">Buscar</button>
+</form>
+{% endif %}
+
+{% if usuario %}
+    <h2>Perros reservados para {{ usuario.nombre }}</h2>
+
+    {% if perros %}
+        <ul>
+            {% for perro in perros %}
+                <li>
+                    {{ perro.nombre }} - {{ perro.raza }} - {{ perro.edad }} años - {{ perro.tamaño }}
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" name="confirmar" value="{{ perro.id }}" class="btn btn-success btn-sm">Confirmar adopción</button>
+                        <input type="hidden" name="dni" value="{{ usuario.dni }}">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay perros reservados para confirmar.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

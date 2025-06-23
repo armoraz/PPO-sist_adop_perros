@@ -67,10 +67,7 @@ def buscar_para_usuario(request):
 
         busqueda_realizada = True
 
-        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario, 'busqueda_realizada': busqueda_realizada})
-    else:
-        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario, 'busqueda_realizada': busqueda_realizada})
-    
+    return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario, 'busqueda_realizada': busqueda_realizada})
 
 
 def postular_adopcion(request, id_perro, dni_usuario):
@@ -96,3 +93,28 @@ def postular_adopcion(request, id_perro, dni_usuario):
         perros = perros.filter(tamaño__iexact=usuario.preferencias_tamaño)
 
     return render(request, 'buscar_para_usuario.html', {'perros': perros, 'usuario': usuario, 'mensaje': mensaje})
+
+def confirmar_adopcion(request):
+    if request.method == 'POST':
+        dni = request.POST.get('dni')
+        try:
+            usuario = UsuarioAdoptante.objects.get(dni=dni)
+        except UsuarioAdoptante.DoesNotExist:
+            return render(request, 'confirmar_adopcion.html', {'error': 'Usuario no encontrado'})
+
+        perros_reservados = Perro.objects.filter(estado='reservado')
+
+        if 'confirmar' in request.POST:
+            id_perro = request.POST.get('confirmar')
+            perro = Perro.objects.get(id=id_perro)
+            perro.estado = 'adoptado'
+            perro.save()
+            mensaje = f"El perro {perro.nombre} fue adoptado por {usuario.nombre}."
+
+            perros_reservados = Perro.objects.filter(estado='reservado')
+
+            return render(request, 'confirmar_adopcion.html', {'usuario': usuario, 'perros': perros_reservados, 'mensaje': mensaje})
+
+        return render(request, 'confirmar_adopcion.html', {'usuario': usuario, 'perros': perros_reservados})
+
+    return render(request, 'confirmar_adopcion.html')
