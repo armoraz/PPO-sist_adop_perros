@@ -17,4 +17,4 @@ class UsuarioAdoptante(models.Model):
     email = models.EmailField()
     preferencias_raza = models.CharField(max_length=50, null=True, blank=True)
     preferencias_edad = models.IntegerField(null=True, blank=True)
-    preferencias_tamaño = models.CharField(max_length=20, null=True, blank=True)
+    preferencias_tamaño = models.CharField(max_length=20, choices=[('pequeño', 'Pequeño'), ('mediano', 'Mediano'), ('grande', 'Grande')])
