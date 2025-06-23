@@ -48,6 +48,7 @@ def lista_perros(request):
 def buscar_para_usuario(request):
     perros = None
     usuario = None
+    busqueda_realizada = False
     if request.method == 'POST':
         dni = request.POST.get('dni')
         try:
@@ -64,10 +65,11 @@ def buscar_para_usuario(request):
         if usuario.preferencias_tamaño:
             perros = perros.filter(tamaño__iexact=usuario.preferencias_tamaño)
 
-        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario})
-    else:
+        busqueda_realizada = True
 
-        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario})
+        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario, 'busqueda_realizada': busqueda_realizada})
+    else:
+        return render(request, 'buscar_para_usuario.html',{'perros': perros, 'usuario': usuario, 'busqueda_realizada': busqueda_realizada})
     
 
 

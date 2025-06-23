@@ -34,6 +34,8 @@
         {% endfor %}
     </ul>
 {% else %}
-    <p>No hay perros disponibles para adopción según sus preferencias.</p>
+    {% if busqueda_realizada %}
+        <p>No hay perros disponibles para adopción según sus preferencias.</p>
+    {% endif %}
 {% endif %}
 {% endblock %}
