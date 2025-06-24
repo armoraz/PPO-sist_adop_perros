@@ -43,7 +43,8 @@ def lista_perros(request):
             perros = perros.filter(tamaño__iexact=tamaño)
 
 
-    return render(request, 'lista_perros.html', {'perros': perros})
+    return render(request, 'lista_perros_v2.html', {'perros': perros}) #v2
+    # return render(request, 'lista_perros_v2.html', {'perros': perros})
 
 def buscar_para_usuario(request):
     perros = None
