@@ -5,19 +5,21 @@
 <h1>Confirmar adopción</h1>
 
 {% if error %}
-    <p style="color:red">{{ error }}</p>
+    <p class="alert alert-danger">{{ error }}</p>
 {% endif %}
 
 {% if mensaje %}
-    <p style="color:green">{{ mensaje }}</p>
+    <p class="alert alert-success">{{ mensaje }}</p>
 {% endif %}
 
 
-<form method="post">
+<form method="post" class="mb-4">
     {% csrf_token %}
+    <div class="col-auto">
     <label>Ingrese su DNI:</label>
     <input type="text" name="dni">
-    <button type="submit">Buscar</button>
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
 </form>
 
 
