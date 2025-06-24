@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Perro, UsuarioAdoptante
+from .models import Perro, UsuarioAdoptante, RAZAS, TAMAÑOS, SALUD, TEMPERAMENTOS
 from .forms import UsuarioAdoptanteForm, PerroForm, BuscarPerroForm
 
 #Vista usuario adoptante
@@ -43,8 +43,29 @@ def lista_perros(request):
             perros = perros.filter(tamaño__iexact=tamaño)
 
 
-    return render(request, 'lista_perros_v2.html', {'perros': perros}) #v2
+    return render(request, 'lista_perros_v2.html', {'perros': perros, 'RAZAS': RAZAS,
+        'TAMAÑOS': TAMAÑOS}) #v2
     # return render(request, 'lista_perros_v2.html', {'perros': perros})
+
+def lista_perros_v1(request):
+    perros = Perro.objects.filter(estado='disponible')
+    form = BuscarPerroForm(request.GET or None)
+
+    if form.is_valid():
+        raza = form.cleaned_data.get('raza')
+        edad = form.cleaned_data.get('edad')
+        tamaño = form.cleaned_data.get('tamaño')
+
+        if raza:
+            perros = perros.filter(raza__iexact=raza)
+        if edad:
+            perros = perros.filter(edad=edad)
+        if tamaño:
+            perros = perros.filter(tamaño__iexact=tamaño)
+
+
+    return render(request, 'lista_perros.html', {'perros': perros}) #v2
+
 
 def buscar_para_usuario(request):
     perros = None

@@ -11,7 +11,12 @@
         <div class="row g-3">
             <div class="col-md-4">
                 <label class="form-label">Raza:</label>
-                <input class="form-control" type="text" name="raza" value="{{ request.GET.raza }}">
+                <select class="form-select" name="raza">
+                <option value="">-- Cualquier raza --</option>
+                {% for key, label in RAZAS %}
+                    <option value="{{ key }}" {% if key == raza_actual %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
             </div>
             <div class="col-md-4">
                 <label class="form-label">Edad:</label>
@@ -19,7 +24,12 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label">Tamaño:</label>
-                <input class="form-control" type="text" name="tamaño" value="{{ request.GET.tamaño }}">
+                <select class="form-select" name="tamaño">
+                <option value="">-- Cualquier tamaño --</option>
+                {% for key, label in TAMAÑOS %}
+                    <option value="{{ key }}" {% if key == tamaño_actual %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+                </select>
             </div>
         </div>
         <div class="mt-3">
