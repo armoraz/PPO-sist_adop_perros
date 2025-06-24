@@ -76,6 +76,7 @@ def postular_adopcion(request, id_perro, dni_usuario):
 
     if perro.estado == 'disponible':
         perro.estado = 'reservado'
+        perro.reservado_por = usuario
         perro.save()
         mensaje = f"{usuario.nombre} postuló la adopción de {perro.nombre}."
     else:
@@ -102,7 +103,7 @@ def confirmar_adopcion(request):
         except UsuarioAdoptante.DoesNotExist:
             return render(request, 'confirmar_adopcion.html', {'error': 'Usuario no encontrado'})
 
-        perros_reservados = Perro.objects.filter(estado='reservado')
+        perros_reservados = Perro.objects.filter(estado='reservado',reservado_por=usuario)
 
         if 'confirmar' in request.POST:
             id_perro = request.POST.get('confirmar')
@@ -111,7 +112,7 @@ def confirmar_adopcion(request):
             perro.save()
             mensaje = f"El perro {perro.nombre} fue adoptado por {usuario.nombre}."
 
-            perros_reservados = Perro.objects.filter(estado='reservado')
+            perros_reservados = Perro.objects.filter(estado='reservado',reservado_por=usuario)
 
             return render(request, 'confirmar_adopcion.html', {'usuario': usuario, 'perros': perros_reservados, 'mensaje': mensaje})
 

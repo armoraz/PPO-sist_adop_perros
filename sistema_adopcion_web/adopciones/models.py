@@ -10,6 +10,9 @@ class Perro(models.Model):
     vacunado = models.BooleanField(default=False)
     estado = models.CharField(max_length=20, choices=[('disponible', 'Disponible'), ('reservado', 'Reservado'), ('adoptado', 'Adoptado')])
     temperamento = models.CharField(max_length=50, choices=[('tranquilo','Tranquilo'), ('jugueton','Juguetón'), ('protector','Protector'), ('sociable','Sociable')])
+    reservado_por = models.ForeignKey(
+        'UsuarioAdoptante', null=True, blank=True, on_delete=models.SET_NULL
+    )
 
 class UsuarioAdoptante(models.Model):
     nombre = models.CharField(max_length=100)
@@ -18,3 +21,4 @@ class UsuarioAdoptante(models.Model):
     preferencias_raza = models.CharField(max_length=50, null=True, blank=True)
     preferencias_edad = models.IntegerField(null=True, blank=True)
     preferencias_tamaño = models.CharField(max_length=20, choices=[('pequeño', 'Pequeño'), ('mediano', 'Mediano'), ('grande', 'Grande')])
+

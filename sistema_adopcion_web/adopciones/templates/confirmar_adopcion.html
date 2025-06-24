@@ -12,14 +12,14 @@
     <p style="color:green">{{ mensaje }}</p>
 {% endif %}
 
-{% if not usuario %}
+
 <form method="post">
     {% csrf_token %}
     <label>Ingrese su DNI:</label>
     <input type="text" name="dni">
     <button type="submit">Buscar</button>
 </form>
-{% endif %}
+
 
 {% if usuario %}
     <h2>Perros reservados para {{ usuario.nombre }}</h2>
