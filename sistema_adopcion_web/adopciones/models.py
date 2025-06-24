@@ -1,6 +1,5 @@
 from django.db import models
 
-# Choices predefinidos
 RAZAS = [
     ('labrador', 'Labrador'),
     ('beagle', 'Beagle'),
@@ -28,6 +27,12 @@ TEMPERAMENTOS = [
     ('sociable','Sociable'),
 ]
 
+ESTADOS = [
+    ('disponible', 'Disponible'),
+    ('reservado', 'Reservado'),
+    ('adoptado', 'Adoptado')
+]
+
 
 class Perro(models.Model):
     nombre = models.CharField(max_length=100)
@@ -37,11 +42,7 @@ class Perro(models.Model):
     peso = models.FloatField()
     estado_salud = models.CharField(max_length=100, choices=SALUD)
     vacunado = models.BooleanField(default=False)
-    estado = models.CharField(max_length=20, choices=[
-        ('disponible', 'Disponible'),
-        ('reservado', 'Reservado'),
-        ('adoptado', 'Adoptado')
-    ])
+    estado = models.CharField(max_length=20, choices=ESTADOS)
     temperamento = models.CharField(max_length=50, choices=TEMPERAMENTOS)
     url_imagen = models.URLField(max_length=300, null=True, blank=True)
     reservado_por = models.ForeignKey('UsuarioAdoptante', null=True, blank=True, on_delete=models.SET_NULL)

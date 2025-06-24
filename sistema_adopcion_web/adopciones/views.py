@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Perro, UsuarioAdoptante, RAZAS, TAMAÑOS, SALUD, TEMPERAMENTOS
+from .models import Perro, UsuarioAdoptante, RAZAS, TAMAÑOS, SALUD, TEMPERAMENTOS, ESTADOS
 from .forms import UsuarioAdoptanteForm, PerroForm, BuscarPerroForm
 
 #Vista usuario adoptante
@@ -27,13 +27,14 @@ def registrar_perro(request):
     return render(request, 'registrar_perro.html', {'form': form})
 
 def lista_perros(request):
-    perros = Perro.objects.filter(estado='disponible')
+    perros = Perro.objects.all()
     form = BuscarPerroForm(request.GET or None)
 
     if form.is_valid():
         raza = form.cleaned_data.get('raza')
         edad = form.cleaned_data.get('edad')
         tamaño = form.cleaned_data.get('tamaño')
+        estado = request.GET.get('estado')
 
         if raza:
             perros = perros.filter(raza__iexact=raza)
@@ -41,20 +42,23 @@ def lista_perros(request):
             perros = perros.filter(edad=edad)
         if tamaño:
             perros = perros.filter(tamaño__iexact=tamaño)
+        if estado:
+            perros = perros.filter(estado=estado)
 
 
     return render(request, 'lista_perros_v2.html', {'perros': perros, 'RAZAS': RAZAS,
-        'TAMAÑOS': TAMAÑOS}) #v2
+        'TAMAÑOS': TAMAÑOS, 'ESTADOS': ESTADOS}) #v2
     # return render(request, 'lista_perros_v2.html', {'perros': perros})
 
 def lista_perros_v1(request):
-    perros = Perro.objects.filter(estado='disponible')
+    perros = Perro.objects.all()
     form = BuscarPerroForm(request.GET or None)
 
     if form.is_valid():
         raza = form.cleaned_data.get('raza')
         edad = form.cleaned_data.get('edad')
         tamaño = form.cleaned_data.get('tamaño')
+        
 
         if raza:
             perros = perros.filter(raza__iexact=raza)
@@ -62,6 +66,8 @@ def lista_perros_v1(request):
             perros = perros.filter(edad=edad)
         if tamaño:
             perros = perros.filter(tamaño__iexact=tamaño)
+
+
 
 
     return render(request, 'lista_perros.html', {'perros': perros}) #v2
