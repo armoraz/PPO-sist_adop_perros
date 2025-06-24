@@ -27,6 +27,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Foto</th>
             <th>Nombre</th>
             <th>Raza</th>
             <th>Edad</th>
@@ -35,6 +36,7 @@
     <tbody>
         {% for perro in perros %}
             <tr>
+                <td><img src="{{ perro.url_imagen }}" alt="{{ perro.nombre }}" style="width: auto; height: 100px;" class="rounded mx-auto d-block"></td>
                 <td>{{ perro.nombre }}</td>
                 <td>{{ perro.raza }}</td>
                 <td>{{ perro.edad }} años</td>
